@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Notes</string>
+    <string name="search_notes">Поиск заметок</string>
+    <string name="notes">Notes</string>
+    <string name="archive">Archive</string>
+    <string name="trash">Trash</string>
 </resources>
