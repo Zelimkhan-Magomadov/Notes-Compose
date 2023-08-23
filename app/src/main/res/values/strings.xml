@@ -4,4 +4,6 @@
     <string name="notes">Notes</string>
     <string name="archive">Archive</string>
     <string name="trash">Trash</string>
+    <string name="name">Name</string>
+    <string name="text">Text</string>
 </resources>

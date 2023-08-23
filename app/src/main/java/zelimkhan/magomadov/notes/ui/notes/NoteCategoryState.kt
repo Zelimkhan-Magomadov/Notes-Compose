@@ -1,6 +1,6 @@
 package zelimkhan.magomadov.notes.ui.notes
 
-import zelimkhan.magomadov.notes.data.NoteType
+import zelimkhan.magomadov.notes.data.NoteTypeLocal
 
 sealed interface NoteCategoryState {
     data object Notes : NoteCategoryState
@@ -8,10 +8,10 @@ sealed interface NoteCategoryState {
     data object Trash : NoteCategoryState
 }
 
-fun NoteCategoryState.asNoteType(): NoteType {
+fun NoteCategoryState.asNoteType(): NoteTypeLocal {
     return when (this) {
-        NoteCategoryState.Notes -> NoteType.Note
-        NoteCategoryState.Archive -> NoteType.Archived
-        NoteCategoryState.Trash -> NoteType.Deleted
+        NoteCategoryState.Notes -> NoteTypeLocal.Note
+        NoteCategoryState.Archive -> NoteTypeLocal.Archived
+        NoteCategoryState.Trash -> NoteTypeLocal.Deleted
     }
 }
