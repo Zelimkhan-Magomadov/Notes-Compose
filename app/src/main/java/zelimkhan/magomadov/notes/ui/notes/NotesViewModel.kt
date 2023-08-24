@@ -6,6 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import zelimkhan.magomadov.notes.data.NotesRepository
+import zelimkhan.magomadov.notes.ui.notes.state.NoteCategoryState
+import zelimkhan.magomadov.notes.ui.notes.state.NoteItemState
+import zelimkhan.magomadov.notes.ui.notes.state.NotesIntent
+import zelimkhan.magomadov.notes.ui.notes.state.asNoteItem
+import zelimkhan.magomadov.notes.ui.notes.state.asNoteType
 
 class NotesViewModel : ViewModel() {
     private val _notes = MutableStateFlow<List<NoteItemState>>(emptyList())

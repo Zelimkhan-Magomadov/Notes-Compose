@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.notes.ui.note
+package zelimkhan.magomadov.notes.ui.note.state
 
 sealed interface NoteIntent {
     data class TitleChange(val value: String) : NoteIntent

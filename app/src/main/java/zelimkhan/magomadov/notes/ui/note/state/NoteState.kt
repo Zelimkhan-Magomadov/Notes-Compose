@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.notes.ui.note
+package zelimkhan.magomadov.notes.ui.note.state
 
 import zelimkhan.magomadov.notes.data.NoteLocal
 

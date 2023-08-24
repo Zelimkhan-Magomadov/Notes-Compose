@@ -8,24 +8,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
+import zelimkhan.magomadov.notes.R
 import zelimkhan.magomadov.notes.ui.destinations.NoteScreenDestination
+import zelimkhan.magomadov.notes.ui.note.components.NoteTextField
 import zelimkhan.magomadov.notes.ui.notes.components.NoteCategories
 import zelimkhan.magomadov.notes.ui.notes.components.NoteItem
-import zelimkhan.magomadov.notes.ui.notes.components.SearchNote
+import zelimkhan.magomadov.notes.ui.notes.state.NoteCategoryState
+import zelimkhan.magomadov.notes.ui.notes.state.NoteItemState
+import zelimkhan.magomadov.notes.ui.notes.state.NotesIntent
 import zelimkhan.magomadov.notes.ui.theme.NotesTheme
 
 @Destination(start = true)
@@ -61,13 +72,18 @@ fun NotesScreenContent(
         Column(
             modifier = modifier.padding(paddingValues)
         ) {
-            SearchNote(
+            NoteTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = "",
                 onValueChange = {},
-                onSearch = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                paddings = PaddingValues(16.dp),
+                contentPaddings = PaddingValues(9.dp),
+                placeholderText = stringResource(id = R.string.search_notes),
+                shape = RoundedCornerShape(32.dp),
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                leadingIcon = { Icon(Icons.Rounded.Search, null) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = { /*onSearch()*/ }),
             )
 
             NoteCategories(noteCategoryState = noteCategoryState, onSelectCategory = onIntent)
@@ -76,7 +92,7 @@ fun NotesScreenContent(
                 columns = StaggeredGridCells.Fixed(2),
                 contentPadding = PaddingValues(8.dp),
                 verticalItemSpacing = 8.dp,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(notes, key = { item -> item.id }) {
                     NoteItem(
@@ -92,7 +108,7 @@ fun NotesScreenContent(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    NotesTheme {
+    NotesTheme(useDarkTheme = false) {
         val notes = mutableListOf(
             NoteItemState(id = 1, "Note", "text"),
             NoteItemState(id = 2, "Archived", "text"),

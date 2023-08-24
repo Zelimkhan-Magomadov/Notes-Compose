@@ -9,6 +9,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import zelimkhan.magomadov.notes.data.NotesRepository
 import zelimkhan.magomadov.notes.ui.navArgs
+import zelimkhan.magomadov.notes.ui.note.state.NoteIntent
+import zelimkhan.magomadov.notes.ui.note.state.NoteScreenNavArgs
+import zelimkhan.magomadov.notes.ui.note.state.NoteState
+import zelimkhan.magomadov.notes.ui.note.state.asNoteLocal
+import zelimkhan.magomadov.notes.ui.note.state.asNoteState
 
 class NoteViewModel(
     savedStateHandle: SavedStateHandle
@@ -35,7 +40,6 @@ class NoteViewModel(
                 is NoteIntent.TitleChange -> _noteState.update { it.copy(title = intent.value) }
                 is NoteIntent.TextChange -> _noteState.update { it.copy(text = intent.value) }
             }
-            println("========================================")
             notesRepository.save(noteState.value.asNoteLocal())
         }
     }

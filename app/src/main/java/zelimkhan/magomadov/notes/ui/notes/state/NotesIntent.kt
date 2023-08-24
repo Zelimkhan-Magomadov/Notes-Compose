@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.notes.ui.notes
+package zelimkhan.magomadov.notes.ui.notes.state
 
 sealed interface NotesIntent {
     data object SelectNotesCategory : NotesIntent

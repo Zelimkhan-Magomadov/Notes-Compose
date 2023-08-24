@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.notes.ui.note
+package zelimkhan.magomadov.notes.ui.note.state
 
 import zelimkhan.magomadov.notes.data.NoteTypeLocal
 
@@ -18,7 +18,7 @@ fun NoteType.asNoteTypeLocal(): NoteTypeLocal {
 
 fun NoteTypeLocal.asNoteType(): NoteType {
     return when (this) {
-        NoteTypeLocal.Note ->  NoteType.Note
+        NoteTypeLocal.Note -> NoteType.Note
         NoteTypeLocal.Archived -> NoteType.Archived
         NoteTypeLocal.Deleted -> NoteType.Deleted
     }

@@ -11,9 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import zelimkhan.magomadov.notes.ui.notes.NoteItemState
+import zelimkhan.magomadov.notes.ui.notes.state.NoteItemState
 import zelimkhan.magomadov.notes.ui.theme.NotesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,9 +26,19 @@ fun NoteItem(
 ) {
     Card(modifier = modifier, onClick = { onClick(noteItemState.id) }) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Text(text = noteItemState.title, style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = noteItemState.title,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = noteItemState.text, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = noteItemState.text,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 10,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
