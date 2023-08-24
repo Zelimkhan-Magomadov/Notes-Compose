@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import zelimkhan.magomadov.notes.R
 import zelimkhan.magomadov.notes.ui.note.components.NoteTextField
@@ -35,7 +35,7 @@ import zelimkhan.magomadov.notes.ui.theme.NotesTheme
 @Destination(navArgsDelegate = NoteScreenNavArgs::class)
 @Composable
 fun NoteScreen() {
-    val viewModel: NoteViewModel = viewModel()
+    val viewModel: NoteViewModel = hiltViewModel()
     val noteState = viewModel.noteState.collectAsState()
 
     NoteScreenContent(

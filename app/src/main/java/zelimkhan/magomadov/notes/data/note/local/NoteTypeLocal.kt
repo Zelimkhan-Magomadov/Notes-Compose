@@ -1,4 +1,4 @@
-package zelimkhan.magomadov.notes.data
+package zelimkhan.magomadov.notes.data.note.local
 
 sealed interface NoteTypeLocal {
     data object Note : NoteTypeLocal

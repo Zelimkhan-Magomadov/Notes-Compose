@@ -1,6 +1,6 @@
 package zelimkhan.magomadov.notes.ui.note.state
 
-import zelimkhan.magomadov.notes.data.NoteLocal
+import zelimkhan.magomadov.notes.data.note.local.NoteLocal
 
 data class NoteState(
     val id: Long = 0,

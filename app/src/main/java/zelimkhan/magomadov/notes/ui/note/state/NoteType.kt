@@ -1,6 +1,6 @@
 package zelimkhan.magomadov.notes.ui.note.state
 
-import zelimkhan.magomadov.notes.data.NoteTypeLocal
+import zelimkhan.magomadov.notes.data.note.local.NoteTypeLocal
 
 sealed interface NoteType {
     data object Note : NoteType

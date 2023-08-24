@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
@@ -42,7 +42,7 @@ import zelimkhan.magomadov.notes.ui.theme.NotesTheme
 @Destination(start = true)
 @Composable
 fun NotesScreen(navigator: DestinationsNavigator) {
-    val viewModel: NotesViewModel = viewModel()
+    val viewModel: NotesViewModel = hiltViewModel()
     val notes = viewModel.notes.collectAsState()
     val noteCategoryState = viewModel.noteCategoryState.collectAsState()
 

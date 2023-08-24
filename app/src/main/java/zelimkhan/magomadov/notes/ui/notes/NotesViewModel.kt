@@ -2,24 +2,30 @@ package zelimkhan.magomadov.notes.ui.notes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import zelimkhan.magomadov.notes.data.NotesRepository
+import zelimkhan.magomadov.notes.data.note.NoteRepository
 import zelimkhan.magomadov.notes.ui.notes.state.NoteCategoryState
 import zelimkhan.magomadov.notes.ui.notes.state.NoteItemState
 import zelimkhan.magomadov.notes.ui.notes.state.NotesIntent
 import zelimkhan.magomadov.notes.ui.notes.state.asNoteItem
 import zelimkhan.magomadov.notes.ui.notes.state.asNoteType
+import javax.inject.Inject
 
-class NotesViewModel : ViewModel() {
+@HiltViewModel
+class NotesViewModel @Inject constructor(
+    private val noteRepository: NoteRepository
+) : ViewModel() {
     private val _notes = MutableStateFlow<List<NoteItemState>>(emptyList())
     val notes = _notes.asStateFlow()
 
     private val _noteCategoryState = MutableStateFlow<NoteCategoryState>(NoteCategoryState.Notes)
     val noteCategoryState = _noteCategoryState.asStateFlow()
-
-    private val notesRepository = NotesRepository()
 
     init {
         viewModelScope.launch {
@@ -46,7 +52,9 @@ class NotesViewModel : ViewModel() {
 
     private fun loadNotes() {
         val noteType = noteCategoryState.value.asNoteType()
-        val notes = notesRepository.getNotes(noteType)
-        _notes.value = notes.map { it.asNoteItem() }
+        noteRepository.get(noteType)
+            .map { notes -> notes.map { it.asNoteItem() } }
+            .onEach { transformedNotes -> _notes.value = transformedNotes }
+            .launchIn(viewModelScope)
     }
 }

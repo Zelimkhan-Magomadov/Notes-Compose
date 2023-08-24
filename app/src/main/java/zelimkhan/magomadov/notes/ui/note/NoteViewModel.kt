@@ -3,34 +3,36 @@ package zelimkhan.magomadov.notes.ui.note
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import zelimkhan.magomadov.notes.data.NotesRepository
+import zelimkhan.magomadov.notes.data.note.NoteRepository
 import zelimkhan.magomadov.notes.ui.navArgs
 import zelimkhan.magomadov.notes.ui.note.state.NoteIntent
 import zelimkhan.magomadov.notes.ui.note.state.NoteScreenNavArgs
 import zelimkhan.magomadov.notes.ui.note.state.NoteState
 import zelimkhan.magomadov.notes.ui.note.state.asNoteLocal
 import zelimkhan.magomadov.notes.ui.note.state.asNoteState
+import javax.inject.Inject
 
-class NoteViewModel(
+@HiltViewModel
+class NoteViewModel @Inject constructor(
+    private val noteRepository: NoteRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _noteState = MutableStateFlow(NoteState())
     val noteState = _noteState.asStateFlow()
-
-    private val notesRepository = NotesRepository()
 
     init {
         viewModelScope.launch {
             val navArgs: NoteScreenNavArgs = savedStateHandle.navArgs()
             val noteId = navArgs.id
             _noteState.value = if (noteId != 0L)
-                notesRepository.getNote(noteId).asNoteState()
+                noteRepository.get(noteId).asNoteState()
             else
-                notesRepository.createNote().asNoteState()
+                NoteState(id = noteRepository.add())
         }
     }
 
@@ -40,7 +42,7 @@ class NoteViewModel(
                 is NoteIntent.TitleChange -> _noteState.update { it.copy(title = intent.value) }
                 is NoteIntent.TextChange -> _noteState.update { it.copy(text = intent.value) }
             }
-            notesRepository.save(noteState.value.asNoteLocal())
+            noteRepository.update(noteState.value.asNoteLocal())
         }
     }
 }
